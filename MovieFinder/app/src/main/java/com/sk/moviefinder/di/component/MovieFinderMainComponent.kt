@@ -9,12 +9,14 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
 //@Component(modules = [ApiModule::class, ApplicationModule::class, RepositoryModule::class, UseCaseModule::class, ViewModelModule::class])
 @Component(
     modules = [AndroidSupportInjectionModule::class, ActivityBuilderModule::class,
         ApiModule::class, ApplicationModule::class, RepositoryModule::class, UseCaseModule::class]
 )
+@Singleton
 interface MovieFinderMainComponent : AndroidInjector<MovieFinderApplication> {
 
     @Component.Factory

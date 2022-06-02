@@ -1,13 +1,118 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.moviedetail.MovieDetailFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/details_guideline"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="@dimen/match_constraints"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/poster_iv"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="@dimen/match_constraints"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/details_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movie_details_group"
+        android:layout_width="@dimen/match_constraints"
+        android:layout_height="@dimen/match_constraints"
+        android:background="@drawable/shape_movie_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/details_guideline">
+
+        <TextView
+            android:id="@+id/movie_title_tv"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="@dimen/movie_details_fragment_movie_title_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Film Name" />
+
+        <TextView
+            android:id="@+id/runtime_tv"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/movie_details_horizontal_margin"
+            android:layout_marginTop="@dimen/movie_details_horizontal_margin"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textColorHighlight="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/vote_count_tv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_tv"
+            tools:text="Runtime" />
+
+        <TextView
+            android:id="@+id/vote_count_tv"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/movie_details_horizontal_margin"
+            android:layout_marginEnd="@dimen/movie_details_horizontal_margin"
+            android:drawablePadding="8dp"
+            android:gravity="end"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/runtime_tv"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_tv"
+            tools:text="Vote Count" />
+
+        <TextView
+            android:id="@+id/genres_tv"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/movie_details_horizontal_margin"
+            android:layout_marginTop="@dimen/movie_details_fragment_vertical_margin"
+            android:layout_marginEnd="@dimen/movie_details_horizontal_margin"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/runtime_tv"
+            tools:text="Genres" />
+
+        <TextView
+            android:id="@+id/description_tv"
+            android:layout_width="@dimen/match_constraints"
+            android:layout_height="@dimen/match_constraints"
+            android:layout_marginStart="@dimen/movie_details_horizontal_margin"
+            android:layout_marginTop="@dimen/movie_details_fragment_vertical_margin"
+            android:layout_marginEnd="@dimen/movie_details_horizontal_margin"
+            android:layout_marginBottom="@dimen/movie_details_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genres_tv"
+            tools:text="Description" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

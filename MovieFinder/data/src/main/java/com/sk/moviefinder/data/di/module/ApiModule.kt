@@ -11,10 +11,15 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.sk.moviefinder.data.api.MovieService
 import okhttp3.Cache
+import okhttp3.Interceptor
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private const val BASE_URL = "http://www.omdbapi.com"
+private const val API_KEY = "f5ca194a"
 
-@Module()
+@Module
 class ApiModule {
 
     @Provides
@@ -35,17 +40,35 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideOkhttpClient(cache: Cache): OkHttpClient {
-        val client = OkHttpClient.Builder()
-        client.cache(cache)
+        val requestInterceptor = Interceptor { chain ->
+            val url = chain.request().url.newBuilder().addQueryParameter("apikey", API_KEY)
+                .build()
+            val request = chain.request().newBuilder().url(url).build()
+            return@Interceptor chain.proceed(request)
+        }
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+        val client = OkHttpClient.Builder().apply {
+            cache(cache)
+            callTimeout(
+                5,
+                TimeUnit.SECONDS)
+            readTimeout(5, TimeUnit.SECONDS)
+            connectTimeout(5, TimeUnit.SECONDS)
+            addInterceptor(requestInterceptor)
+            addInterceptor(loggingInterceptor)
+        }
         return client.build()
     }
 
     @Provides
     @Singleton
     fun provideMovieService(gson: Gson, okHttpClient: OkHttpClient): MovieService {
+
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("mBaseUrl")
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build().create(MovieService::class.java)
     }

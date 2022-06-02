@@ -1,10 +1,14 @@
 package com.sk.moviefinder.data.api
 
-import retrofit2.Call
+import com.sk.moviefinder.data.api.response.moviedetail.MovieDetailResponse
+import com.sk.moviefinder.data.api.response.moviesearch.MovieSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MovieService {
-    @GET("movies")
-    fun searchMovie(@Query("movie_name") name: String): Call<String>
+    @GET("/")
+    suspend fun searchMovie(@Query("s") name: String): MovieSearchResponse
+
+    @GET("/")
+    suspend fun getMovieDetailById(@Query("i") id: String): MovieDetailResponse
 }

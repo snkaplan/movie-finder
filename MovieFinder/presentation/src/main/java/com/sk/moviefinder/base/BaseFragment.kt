@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.sk.moviefinder.common.showFragment
 import dagger.android.support.DaggerFragment
 
 abstract class BaseFragment : DaggerFragment() {
@@ -26,8 +24,4 @@ abstract class BaseFragment : DaggerFragment() {
     abstract fun viewReady()
 
     abstract fun getLayout(): Int
-
-    fun addFragment(fragment: Fragment, containerId: Int, addToBackStack: Boolean = false) {
-        activity?.showFragment(fragment, containerId, addToBackStack)
-    }
 }

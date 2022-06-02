@@ -1,9 +1,12 @@
 package com.sk.moviefinder.domain.usecase
 
-import android.util.Log
+import com.sk.moviefinder.domain.model.detail.MovieDetail
+import com.sk.moviefinder.domain.repository.MovieRepository
+import com.sk.moviefinder.domain.model.Result
 
-class MovieDetailUseCaseImpl : MovieDetailUseCase {
-    init {
-        Log.d("TAG", "movide detail use case init: ")
+class MovieDetailUseCaseImpl (private val movieRepository: MovieRepository) :
+    MovieDetailUseCase {
+    override suspend fun getMovieDetail(id: String): Result<MovieDetail> {
+        return movieRepository.getMovieDetails(id)
     }
 }

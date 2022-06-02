@@ -1,9 +1,13 @@
 package com.sk.moviefinder.domain.usecase
 
-import android.util.Log
+import com.sk.moviefinder.domain.model.search.MovieSearchResult
+import com.sk.moviefinder.domain.repository.MovieRepository
+import com.sk.moviefinder.domain.model.Result
 
-class SearchMovieUseCaseImpl : SearchMovieUseCase {
-    init {
-        Log.d("TAG", "Search movie use case created: ")
+
+class SearchMovieUseCaseImpl (private val movieRepository: MovieRepository) :
+    SearchMovieUseCase {
+    override suspend fun searchMovie(name: String): Result<MovieSearchResult> {
+        return movieRepository.searchMovieByName(name)
     }
 }

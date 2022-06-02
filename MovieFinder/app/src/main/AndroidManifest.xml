@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".MovieFinderApplication"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MovieFinder">
         <activity
             android:name=".presentation.MovieActivity"
