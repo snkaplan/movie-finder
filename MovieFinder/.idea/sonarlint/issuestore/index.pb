@@ -7,5 +7,3 @@ Q
 !data/src/main/AndroidManifest.xml,f/a/fa20ad08e770fe0392ec3df5be8c6bde6c35d607
 {
 Kpresentation/src/main/java/com/sk/moviefinder/di/annotation/ViewModelKey.kt,9/8/98d88465d2d07fce13c99c59f86e49ef047e002d
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164

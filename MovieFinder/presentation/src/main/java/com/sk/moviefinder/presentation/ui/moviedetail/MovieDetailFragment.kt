@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.sk.moviefinder.base.*
+import com.sk.moviefinder.common.Constants.GENERAL_ERROR
 import com.sk.moviefinder.common.Constants.MOVIE_ID
 import com.sk.moviefinder.common.gone
 import com.sk.moviefinder.common.snackbar
@@ -86,7 +87,7 @@ class MovieDetailFragment : BaseFragment() {
             is Error -> {
                 binding.movieDetailsGroup.gone()
                 binding.progressBar.visible()
-                snackbar("${viewState.error.localizedMessage}", requireView())
+                snackbar(viewState.error.localizedMessage ?: GENERAL_ERROR, requireView())
             }
         }
     }

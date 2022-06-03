@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sk.moviefinder.base.*
 import com.sk.moviefinder.common.*
+import com.sk.moviefinder.common.Constants.GENERAL_ERROR
 import com.sk.moviefinder.common.Constants.MOVIE_ID
 import com.sk.moviefinder.domain.model.search.MovieSearchResult
 import com.sk.moviefinder.presentation.R
@@ -150,20 +151,17 @@ class MovieSearchFragment : BaseFragment() {
     private fun handleViewState(viewState: ViewState<MovieSearchResult>) {
         when (viewState) {
             is Loading -> {
-                binding.moviesRv.gone()
                 binding.searchLinearLayout.gone()
                 binding.progressBar.visible()
             }
             is Success -> {
-                binding.moviesRv.visible()
                 binding.searchLinearLayout.gone()
                 binding.progressBar.gone()
                 moviesRvAdapter.reloadList(viewState.data.movies)
             }
             is Error -> {
                 binding.progressBar.gone()
-                binding.moviesRv.visible()
-                snackbar("${viewState.error.localizedMessage}", requireView())
+                snackbar(viewState.error.localizedMessage ?: GENERAL_ERROR, requireView())
             }
         }
     }

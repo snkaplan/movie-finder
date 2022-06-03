@@ -24,6 +24,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    applicationVariants.all{
+        variant ->
+            variant.outputs.each{
+                output->
+                    project.ext { appName = 'Movie Finder.apk' }
+                    output.outputFileName  = "$project.ext.appName"
+            }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
