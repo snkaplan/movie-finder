@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:name=".MovieFinderApplication"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.MovieFinder">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".presentation.MovieActivity"
             android:exported="true">

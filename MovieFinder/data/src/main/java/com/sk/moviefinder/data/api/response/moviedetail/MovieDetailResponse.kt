@@ -20,8 +20,11 @@ data class MovieDetailResponse(
     val director: String,
     @SerializedName("Genre")
     val genre: String,
+    @SerializedName("imdbID")
     val imdbID: String?,
+    @SerializedName("imdbRating")
     val imdbRating: String?,
+    @SerializedName("imdbVotes")
     val imdbVotes: String?,
     @SerializedName("Language")
     val language: String,
@@ -55,6 +58,6 @@ data class MovieDetailResponse(
     val year: String,
 ) : DomainMapper<MovieDetail> {
     override fun mapToDomainModel(): MovieDetail {
-        return MovieDetail(genre, imdbVotes, plot, poster, runtime, title, year)
+        return MovieDetail(genre, imdbVotes, imdbRating, plot, poster, runtime, title, year)
     }
 }

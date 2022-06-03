@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sk.moviefinder.base.*
 import com.sk.moviefinder.common.*
 import com.sk.moviefinder.common.Constants.MOVIE_ID
@@ -60,11 +61,17 @@ class MovieSearchFragment : BaseFragment() {
         search(searchView)
     }
 
+    /**
+     * Subscribes the live data on view model and subscribes the connection state on view model.
+     */
     private fun subscribeToData() {
         viewModel.viewState.subscribe(this, ::handleViewState)
         handleConnectionState()
     }
 
+    /**
+     * Initializes the UI.
+     */
     private fun setupUI() {
         moviesRvAdapter = MoviesRvAdapter()
         binding.moviesRv.apply {
@@ -89,9 +96,21 @@ class MovieSearchFragment : BaseFragment() {
                         }
                     })
             )
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!recyclerView.canScrollVertically(1)) {
+                        viewModel.loadMoreMovie()
+                    }
+                }
+            })
         }
     }
 
+    /**
+     * Subscribes the connection state on view model.
+     * When the phone's connection status changes, it arranges the UI according to the new state.
+     */
     private fun handleConnectionState() {
         lifecycleScope.launchWhenStarted {
             viewModel.connectionState.collectLatest { connectionState ->
@@ -125,11 +144,12 @@ class MovieSearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Handles view state when live data state changed.
+     */
     private fun handleViewState(viewState: ViewState<MovieSearchResult>) {
         when (viewState) {
             is Loading -> {
-                binding.moviesRv.removeAllViews();
-                binding.moviesRv.recycledViewPool.clear();
                 binding.moviesRv.gone()
                 binding.searchLinearLayout.gone()
                 binding.progressBar.visible()
@@ -138,16 +158,19 @@ class MovieSearchFragment : BaseFragment() {
                 binding.moviesRv.visible()
                 binding.searchLinearLayout.gone()
                 binding.progressBar.gone()
-                moviesRvAdapter.clear()
-                moviesRvAdapter.setData(viewState.data.movies)
+                moviesRvAdapter.reloadList(viewState.data.movies)
             }
             is Error -> {
                 binding.progressBar.gone()
-                snackbar("Error happened. ${viewState.error.localizedMessage}", requireView())
+                binding.moviesRv.visible()
+                snackbar("${viewState.error.localizedMessage}", requireView())
             }
         }
     }
 
+    /**
+     * After the search query submitted, it starts the searching of movie.
+     */
     private fun search(searchView: SearchView) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -155,11 +178,14 @@ class MovieSearchFragment : BaseFragment() {
                 searchView.clearFocus()
                 viewModel.connectionState.value.data?.let {
                     if (it) {
+                        moviesRvAdapter.clear()
+                        binding.moviesRv.removeAllViews()
+                        binding.moviesRv.recycledViewPool.clear()
                         viewModel.searchMovie(query)
                         return true
                     }
                 }
-                snackbar("Please make sure you are connected to the internet", searchView)
+                snackbar(Constants.NETWORK_NOT_CONNECTED, searchView)
                 return true
             }
 

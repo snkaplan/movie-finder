@@ -33,13 +33,9 @@ class MoviesRvAdapter :
     }
 
     fun reloadList(movies: ArrayList<Movie>) {
-        movies.addAll(movies)
-        notifyDataSetChanged()
-    }
-
-    fun setData(movies: ArrayList<Movie>) {
-        this.movies.addAll(movies)
-        notifyItemRangeChanged(0, movies.size)
+        val currentSize = this.movies.size
+        this.movies = movies
+        notifyItemRangeChanged(currentSize, this.movies.size)
     }
 
     fun clear() {
@@ -57,16 +53,20 @@ class MoviesRvAdapter :
 
     inner class MViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie) {
-            itemBinding.titleTv.text = movie.title
-            itemBinding.yearTv.text = movie.year
-            movie.poster?.let {
-                Glide.with(view).load(movie.poster)
-                    .centerCrop()
-                    .thumbnail(0.5f)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(itemBinding.posterIv)
+            itemBinding.apply {
+                titleTv.text = movie.title
+                yearTv.text = movie.year
+                typeTv.text = movie.type
+                movie.poster?.let {
+                    Glide.with(view).load(movie.poster)
+                        .centerCrop()
+                        .thumbnail(0.5f)
+                        .placeholder(R.drawable.shape_movie_placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(posterIv)
+                }
             }
+
         }
     }
 }

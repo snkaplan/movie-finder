@@ -8,4 +8,5 @@ interface MovieRepository {
 
     suspend fun searchMovieByName(movieName: String): Result<MovieSearchResult>
     suspend fun getMovieDetails(id: String): Result<MovieDetail>
+    suspend fun getMoreMovie(movieName: String, page: Int): Result<MovieSearchResult>
 }

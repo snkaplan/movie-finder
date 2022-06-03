@@ -11,6 +11,9 @@ import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(private val movieDetailUseCase: MovieDetailUseCase) :
     BaseViewModel<MovieDetail>() {
+    /**
+     * Gets the given movie detail
+     */
     fun getMovieDetail(id: String) {
         executeUseCase {
             movieDetailUseCase.getMovieDetail(id).onSuccess {

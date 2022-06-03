@@ -3,9 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#C5BFBF</item>
+        <item name="colorPrimaryDark">#515050</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="StatusView">
@@ -14,18 +16,14 @@
         <item name="android:visibility">gone</item>
     </style>
 
+
     <style name="StatusTextView">
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="MyActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">?attr/colorPrimaryDark</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

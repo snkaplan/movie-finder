@@ -11,6 +11,7 @@ data class MovieSearchResponse(
     val response: String,
     @SerializedName("Search")
     val movieSearchResults: List<MovieSearch>,
+    @SerializedName("totalResults")
     val totalResults: Int,
 ) : DomainMapper<MovieSearchResult> {
     override fun mapToDomainModel(): MovieSearchResult {

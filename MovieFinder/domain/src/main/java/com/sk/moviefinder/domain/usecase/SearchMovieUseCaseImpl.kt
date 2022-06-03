@@ -10,4 +10,8 @@ class SearchMovieUseCaseImpl (private val movieRepository: MovieRepository) :
     override suspend fun searchMovie(name: String): Result<MovieSearchResult> {
         return movieRepository.searchMovieByName(name)
     }
+
+    override suspend fun getMoreMovie(name: String, page: Int): Result<MovieSearchResult> {
+        return movieRepository.getMoreMovie(name, page)
+    }
 }

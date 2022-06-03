@@ -11,4 +11,10 @@ interface MovieService {
 
     @GET("/")
     suspend fun getMovieDetailById(@Query("i") id: String): MovieDetailResponse
+
+    @GET("/")
+    suspend fun getMoreMovie(
+        @Query("s") name: String,
+        @Query("page") page: Int,
+    ): MovieSearchResponse
 }
